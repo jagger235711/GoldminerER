@@ -1,5 +1,6 @@
 import os
 from PIL import Image
+from PIL import ImageFont
 import numpy as np
 from keras.models import load_model
 # 音视频分离及视频抽帧
@@ -13,13 +14,29 @@ from params import Params
 param = Params()
 model = load_model(os.path.join(param.img_model_path, "model_v6_23.hdf5"))
 
+# 替换字体路径为系统字体
+font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+textSize = 24  # 字体大小，可根据需要调整
+font = ImageFont.truetype(font_path, textSize, encoding="utf-8")
+
 
 if __name__ == "__main__":
     video_tag = False
     if video_tag:
         print("音视频分离及视频抽帧...")
-        video2data(path=os.path.join("./Repo/video/mp4/", "test.mp4"),
-                cuts=[(4,15), (37,50), (60,94), (105,140), (153,173)],
+        # 示例1: 手动指定切割点
+        # video2data(path=os.path.join("./Repo/video/mp4/", "test.mp4"),
+        #         cuts=[(4,15), (37,50), (60,94), (105,140), (153,173)],
+        #         p=2)
+
+        # 示例2: 自动切割为5段
+        # video2data(path=os.path.join("./Repo/video/mp4/", "mom.mp4"),
+        #         auto_cut=5,
+        #         p=2)
+
+        # 示例3: 自动切割为每段10秒
+        video2data(path=os.path.join("./Repo/video/mp4/", "mom.mp4"),
+                auto_cut=10.0,
                 p=2)
     else:
         # 图像情绪识别
@@ -30,4 +47,3 @@ if __name__ == "__main__":
         # 图像合并gif
         print("进行图像gif合成...")
         img2gif(param)
-

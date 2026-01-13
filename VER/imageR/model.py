@@ -38,9 +38,10 @@ def cv2AddChineseText(img, text, position, textColor=(255, 0, 0), textSize=40):
         img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     # 创建一个可以在给定图像上绘图的对象
     draw = ImageDraw.Draw(img)
+    font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
     # 字体的格式
     fontStyle = ImageFont.truetype(
-        "simsun.ttc", textSize, encoding="utf-8")
+        font_path, textSize, encoding="utf-8")
     # 绘制文本
     draw.text(position, text, textColor, font=fontStyle)
     # 转换回OpenCV格式
